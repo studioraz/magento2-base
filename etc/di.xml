@@ -11,7 +11,9 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="module-status" xsi:type="object">SR\Base\Console\Command\ModuleStatusCommand</item>
+                <item name="catalog-product-delete" xsi:type="object">SR\Base\Console\Command\CatalogProductDelete</item>
             </argument>
+
         </arguments>
     </type>
 </config>

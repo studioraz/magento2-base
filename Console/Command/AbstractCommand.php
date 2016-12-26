@@ -12,7 +12,9 @@ class AbstractCommand extends Command
      * AbstractCommand constructor.
      * @param ObjectManagerInterface $manager
      */
-    public function __construct(ObjectManagerInterface $manager)
+    public function __construct(
+        ObjectManagerInterface $manager
+    )
     {
         $this->objectManager = $manager;
         parent::__construct();
