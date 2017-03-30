@@ -14,8 +14,10 @@
  * @license     https://wiki.studioraz.co.il/wiki/EULA  End-user License Agreement
  */
 
-var config = {
-    deps: [
-        "SR_Base/js/lib/bootstrap"
-    ]
-};
+define(function (require) {
+    'use strict';
+    return {
+        binding : require('./knockout/bindings'),
+        validation   : require('./validation/rules')
+    };
+});

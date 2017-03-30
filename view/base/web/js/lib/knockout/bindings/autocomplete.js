@@ -27,13 +27,13 @@ define([
     var defaults = {
         messages: {
             noResults: '',
-            results: function( amount ) {
+            results: function (amount) {
                 return '';
 
                 /* SR-TODO: add custom message + translation + below element.
-                var text = amount > 1 ? $t("results are available") : $t("result is available");
-                return amount +  ' ' + text +  ', ' + $t("use up and down arrow keys to navigate.");
-                */
+                 var text = amount > 1 ? $t("results are available") : $t("result is available");
+                 return amount +  ' ' + text +  ', ' + $t("use up and down arrow keys to navigate.");
+                 */
 
             }
         }
@@ -52,7 +52,27 @@ define([
          */
         init: function (el, valueAccessor, allBindings, UiClass) {
             var config = valueAccessor(),
-                options = {};
+                options = {
+                    'source': $.proxy(config.source, UiClass),
+                    'select': $.proxy(config.select, UiClass),
+                    'open': function (event, ui) {
+                        var firstElement = $(this).data('uiAutocomplete').menu.element[0].children[0],
+                            input = $(this),
+                            original = input.val(),
+                            firstElementText = $(firstElement).text();
+                        /*
+                         here we want to make sure that we're not matching something that doesn't start
+                         with what was typed in
+                         */
+                        if (firstElementText.toLowerCase().indexOf(original.toLowerCase()) === 0) {
+                            input.val(firstElementText);//change the input to the first match
+
+                            input[0].selectionStart = original.length; //highlight from end of input
+                            input[0].selectionEnd = firstElementText.length;//highlight to the end
+                        }
+                    }
+                };
+
 
             _.extend(options, defaults);
 
@@ -60,16 +80,7 @@ define([
 
             $(el).autocomplete(options);
 
-            $(el).autocomplete('option', 'source', $.proxy(config.source, UiClass));
-
-            $(el).autocomplete('option', 'select', $.proxy(config.select, UiClass));
-
             $(el).blur();
-
-            // SR-TODO: check if knockout js event registration is needed.
-            /*ko.utils.registerEventHandler(el, 'blur', function () {
-                observable(this.value);
-            });*/
 
         }
     };

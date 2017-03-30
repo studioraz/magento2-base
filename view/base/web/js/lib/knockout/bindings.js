@@ -17,6 +17,6 @@
 define(function (require) {
     'use strict';
     return {
-        autocomplete:      require('./autocomplete'),
+        autocomplete : require('./bindings/autocomplete'),
     };
 });

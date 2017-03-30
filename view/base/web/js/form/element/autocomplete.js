@@ -17,8 +17,9 @@
 define([
     'jquery',
     'mageUtils',
-    'Magento_Ui/js/form/element/abstract'
-], function ($, utils, Abstract) {
+    'Magento_Ui/js/form/element/abstract',
+    'Magento_Ui/js/lib/validation/validator'
+], function ($, utils, Abstract, validator) {
     'use strict';
 
     return Abstract.extend({
@@ -34,10 +35,14 @@ define([
 
             template : 'ui/form/field',
 
-            elementTmpl: 'SR_Base/form/element/autocomplete',
+            elementTmpl: 'SR_Base/form/element/autocomplete'
+        },
 
-            listens: {
-            }
+
+        /** @inheritdoc */
+        initialize: function () {
+
+            this._super();
         },
 
         /**
@@ -65,6 +70,31 @@ define([
             }
         },
 
+        validate : function() {
+
+            var result = this._super();
+
+            if (!result.valid || !this.options.validateValue) return result;
+
+            var value = this.value();
+
+            var property = this.options.filterProperty;
+
+            var result = validator('validate-value-exists', value, this.options.source.map(function(item) {
+                return item[property];
+            }));
+
+            if (!result.passed) {
+                this.error(result.message);
+                this.source.set('params.invalid', true);
+            }
+
+            return {
+                valid: result.passed,
+                target: this
+            };
+        },
+
 
         getSource : function (request, response) {
 
@@ -75,10 +105,6 @@ define([
             }
 
             var o = this.options;
-
-            if (this._isDebug()) {
-                o.source = this._getMockData();
-            }
 
             if ($.isArray(o.source)) {
                 response(this.filter(o.source, term));
@@ -134,32 +160,5 @@ define([
             return this.options.debug;
         },
 
-        _getMockData: function () {
-
-            return [
-                { label: "ActionScript", value: 1 },
-                { label: "AppleScript", value: 2 },
-                { label: "Asp", value: 3 },
-                { label: "BASIC", value: 4 },
-                { label: "C", value: 5 },
-                { label: "C++", value: 6 },
-                { label: "Clojure", value: 7 },
-                { label: "COBOL", value: 8 },
-                { label: "ColdFusion", value: 9 },
-                { label: "Erlang", value: 10 },
-                { label: "Fortran", value: 11 },
-                { label: "Groovy", value: 12 },
-                { label: "Haskell", value: 13 },
-                { label: "Java", value: 14 },
-                { label: "JavaScript", value: 15 },
-                { label: "Lisp", value: 16 },
-                { label: "Perl", value: 17 },
-                { label: "PHP", value: 18 },
-                { label: "Python", value: 19 },
-                { label: "Ruby", value: 20 },
-                { label: "Scala", value: 21 },
-                { label: "Scheme", value: 22 }
-            ];
-        }
     });
 });
