@@ -66,6 +66,7 @@
 .ui-autocomplete.ui-widget-content {
     border: 1px solid #dddddd;
     background: #ffffff;
+    z-index: 900;
 }
 .ui-autocomplete.ui-widget-content a {
     color: #333333;
