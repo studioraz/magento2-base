@@ -27,8 +27,7 @@ define([
             options: {
                 debug : false,
                 filterProperty: 'label',
-                termAjaxArgument : null,
-                source  : null
+                termAjaxArgument : null
             },
 
             validationParams: {},
@@ -74,13 +73,19 @@ define([
 
             var result = this._super();
 
-            if (!result.valid || !this.options.validateValue) return result;
+            if (!result.valid || !this.options.validateValue) {
+                return result;
+            }
+
+            if ($.isArray(this.options.data) === false) {
+                return false;
+            }
 
             var value = this.value();
 
             var property = this.options.filterProperty;
 
-            var result = validator('validate-value-exists', value, this.options.source.map(function(item) {
+            var result = validator('validate-value-exists', value, this.options.data.map(function(item) {
                 return item[property];
             }));
 
@@ -97,7 +102,6 @@ define([
 
 
         getSource : function (request, response) {
-
             var term = request.term;
 
             if (utils.isEmpty(term)) {
@@ -106,8 +110,8 @@ define([
 
             var o = this.options;
 
-            if ($.isArray(o.source)) {
-                response(this.filter(o.source, term));
+            if ($.isArray(o.data)) {
+                response(this.filter(o.data, term));
             } else if ($.type(o.source) === 'string') {
                 if (this._xhr) {
                     this._xhr.abort();
