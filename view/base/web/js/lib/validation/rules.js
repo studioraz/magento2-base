@@ -60,6 +60,7 @@ define([
 
 
     _.each(rulesList, function (rule, id) {
+        $.validator.addMethod(id, rule.handler, rule.message);
         validator.addRule(id, rule.handler, rule.message);
     });
 
