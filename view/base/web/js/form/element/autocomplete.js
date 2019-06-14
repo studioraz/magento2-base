@@ -70,8 +70,8 @@ define([
         },
 
         validate : function() {
-
-            var result = this._super();
+            var result = this._super(),
+                self = this;
 
             if (!result.valid || !this.options.validateValue) {
                 return result;
@@ -81,16 +81,14 @@ define([
                 return false;
             }
 
-            var value = this.value();
-
-            var property = this.options.filterProperty;
-
-            var result = validator('validate-value-exists', value, this.options.data.map(function(item) {
-                return item[property];
+            var result = validator('validate-value-exists', this.value(), this.options.data.map(function (item) {
+                return item[self.options.filterProperty];
             }));
 
-            if (!result.passed) {
                 this.error(result.message);
+            this.bubble('error', result.message);
+
+            if (this.source && !result.passed) {
                 this.source.set('params.invalid', true);
             }
 
@@ -162,7 +160,7 @@ define([
 
         _isDebug : function() {
             return this.options.debug;
-        },
+        }
 
     });
 });

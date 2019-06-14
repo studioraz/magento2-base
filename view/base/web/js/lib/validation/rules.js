@@ -47,7 +47,7 @@ define([
         ],
         "validate-israeli-phone-number": [
             function (value) {
-                return /^(?:(?:(?:\s|\.|-)?)|(0[23489]{1})|(0[57]{1}[0-9]))?([^0\D]{1}\d{2}(?:\s|\.|-)?\d{4})$/i.test(value)
+                return /^0(([23489]{1}\d{7})|[5]{1}\d{8})$/i.test(value)
             },
             $t('Please enter a phone number without hyphens and spaces')
         ]
