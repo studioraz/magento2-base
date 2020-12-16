@@ -1,23 +1,14 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!--
+  ~ Copyright © 2020 Studio Raz. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
 
-Studio Raz
-
-NOTICE OF LICENSE
-
-This source file is subject to the End-user License Agreement
-that is available through the world-wide-web at this URL:
-https://wiki.studioraz.co.il/wiki/EULA
-If you are unable to obtain it through the world-wide-web, please
-send an email to support@studioraz.co.il so we can send you a copy immediately.
-
-@package    SR_Base-v1.x.x
-@copyright  Copyright (c) 2016 Studio Raz (https://studioraz.co.il)
-@license    https://wiki.studioraz.co.il/wiki/EULA  End-user License Agreement
-
--->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="SR_Base::elements" title="Studio Raz" module="SR_Base" sortOrder="55" resource="SR_Base::elements"/>
+        <!-- NOTE: sortOrder="69" - to position Menu-Item before Stores -->
+        <add id="SR_Base::srbase" title="Studio Raz" module="SR_Base" translate="title" sortOrder="69" resource="SR_Base::srbase"/>
+        <add id="SR_Base::extensions" title="Extensions" module="SR_Base" translate="title" sortOrder="9998" action="adminhtml/system_config/edit/section/srbase" parent="SR_Base::srbase" resource="SR_Base::extensions"/>
     </menu>
 </config>
