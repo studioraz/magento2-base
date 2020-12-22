@@ -2,7 +2,7 @@
  
 A base module for ALL Studio Raz modules. 
 
-### Backen Menu
+### Backend Menu
 The module adds a menu item to allow dependent modules add their own links. 
 When creating new menu item link in `etc/adminhtml/menu.xml` in order to append it to Studio Raz menu item set `parent="SR_Base::srbase"` 
 ```xml
