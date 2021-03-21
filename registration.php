@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2020 Studio Raz. All rights reserved.
+ * Copyright © 2021 Studio Raz. All rights reserved.
  * See LICENSE.txt for license details.
  */
 

@@ -2,7 +2,11 @@
     "name": "studioraz/magento2-base",
     "description": "Base module for Studio Raz's Magento 2 modules.",
     "type": "magento2-module",
+    "prefer-stable": true,
     "version": "1.0.0",
+    "license": [
+        "proprietary"
+    ],
     "require": {
         "magento/framework": "*"
     },
@@ -13,5 +17,16 @@
         "psr-4": {
             "SR\\Base\\": ""
         }
-    }
+    },
+    "support": {
+        "email": "support@studioraz.co.il"
+    },
+    "authors": [
+        {
+            "name": "Studio Raz",
+            "email": "info@studioraz.co.il",
+            "homepage": "http://www.studio-raz.com",
+            "role": "Developer"
+        }
+    ]
 }
