@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2021-04-16
+### Implemented
+- Helper - to handle DateTime objects;
+- Exception - common LocalizedException for all SR extensions;
+
 ## [1.1.0] - 2021-03-22
 ### Added
 - Feature that allows moving a component in the js layout
@@ -18,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project init
 
 
-[Unreleased]: https://github.com/studioraz/magento2-base/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/studioraz/magento2-base/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/studioraz/magento2-base/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/studioraz/magento2-base/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/studioraz/magento2-base/releases/tag/1.0.0
