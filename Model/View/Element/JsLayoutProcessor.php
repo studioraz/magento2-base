@@ -12,6 +12,8 @@ use SR\Base\Utils\ArrayValueByPath;
 
 class JsLayoutProcessor
 {
+    const MOVE_JS_LAYOUT_ELEMENT_DIRECTION = 'moveTo';
+
     /**
      * @var ArrayValueByPath
      */
@@ -25,8 +27,6 @@ class JsLayoutProcessor
     ) {
         $this->arrayValueByPath = $arrayValueByPath;
     }
-
-    const MOVE_JS_LAYOUT_ELEMENT_DIRECTION = 'moveTo';
 
     /**
      * @var array
