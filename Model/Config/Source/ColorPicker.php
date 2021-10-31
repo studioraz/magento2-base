@@ -23,7 +23,7 @@ class ColorPicker extends Field
         $html .= '<script type="text/x-magento-init">
                 {
                     "#' . $element->getHtmlId() . '": {
-                        "SR_AdminView/js/color-picker": {
+                        "SR_Base/js/color-picker": {
                             "color":"' . $element->getData("value") . '"
                         }
                     }
