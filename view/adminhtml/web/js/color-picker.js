@@ -6,7 +6,7 @@
 
 define(["jquery", "jquery/colorpicker/js/colorpicker", "domReady!"], function ($) {
     return function (config, element) {
-        var $el = $(element);
+        const $el = $(element);
         $el.css("backgroundColor", config.color);
         $el.ColorPicker({
             color: config.color,
