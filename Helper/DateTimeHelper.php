@@ -38,7 +38,9 @@ class DateTimeHelper
     public static function getFormattedValue(string $datetime, string $outputFormat = 'c'): string
     {
         try {
+            $timestamp = time();
             $date = new \DateTime($datetime, self::getTimezone());
+            $date->setTimestamp($timestamp);
         } catch (\Exception $e) {
             return $datetime;
         }
