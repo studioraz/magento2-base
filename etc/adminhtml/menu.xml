@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright © 2020 Studio Raz. All rights reserved.
-  ~ See LICENSE.txt for license details.
+  ~ Copyright © 2022 Studio Raz. All rights reserved.
+  ~ See LICENCE file for license details.
   -->
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <!-- NOTE: sortOrder="69" - to position Menu-Item before Stores -->
-        <add id="SR_Base::srbase" title="Studio Raz" module="SR_Base" translate="title" sortOrder="69" resource="SR_Base::srbase"/>
-        <add id="SR_Base::extensions" title="Extensions" module="SR_Base" translate="title" sortOrder="9998" action="adminhtml/system_config/edit/section/srbase" parent="SR_Base::srbase" resource="SR_Base::extensions"/>
+        <add id="SR_Base::srbase"
+             resource="SR_Base::srbase"
+             module="SR_Base"
+             title="Studio Raz"
+             translate="title"
+             sortOrder="69" />
+
+        <add id="SR_Base::extensions"
+             parent="SR_Base::srbase"
+             resource="SR_Base::extensions"
+             module="SR_Base"
+             title="Extensions"
+             translate="title"
+             action="adminhtml/system_config/edit/section/srbase"
+             sortOrder="9998"/>
+
+
+
+        <!-- NOTE: TRICK to always render sub-menu Group TITLE -->
+        <!--     ,otherwise in case ONLY 1 Group - group's title is not displayed -->
+        <add id="SR_Base::srbase_stub"
+             parent="SR_Base::srbase"
+             resource="SR_Base::srbase_stub"
+             module="SR_Base"
+             title="Stub"
+             sortOrder="10101"/>
     </menu>
 </config>

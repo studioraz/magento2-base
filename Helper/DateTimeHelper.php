@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2021 Studio Raz. All rights reserved.
+ * Copyright © 2022 Studio Raz. All rights reserved.
  * See LICENCE file for license details.
  */
 declare(strict_types=1);
@@ -33,14 +33,13 @@ class DateTimeHelper
      *
      * @param string $datetime Expected value in the Format 'YYYY-MM-DD 00:00:00'
      * @param string $outputFormat [optional] the Date will look like '2020-01-12T23:59:21+00:00' ('c' = ISO 8601)
+     *
      * @return string
      */
     public static function getFormattedValue(string $datetime, string $outputFormat = 'c'): string
     {
         try {
-            $timestamp = time();
             $date = new \DateTime($datetime, self::getTimezone());
-            $date->setTimestamp($timestamp);
         } catch (\Exception $e) {
             return $datetime;
         }
@@ -72,5 +71,48 @@ class DateTimeHelper
         }
 
         return $date->format($format);
+    }
+
+    /**
+     * Subtracts specified interval to Date Begin and Returns formatted date
+     *
+     * @param string $interval see https://www.php.net/manual/en/dateinterval.construct.php (Subtrahend)
+     * @param string $dateBegin Start Date to subtract interval (Minuend)
+     * @param string $format output date format
+     *
+     * @return string
+     */
+    public static function subtractDateInterval(string $interval, string $dateBegin = 'now', string $format = 'c'): string
+    {
+        try {
+            $date = new \DateTime($dateBegin, self::getTimezone());
+            $date->sub(new \DateInterval($interval));
+        } catch (\Exception $e) {
+            // FIXME: WORKAROUND to proceed with correct intervals and return valid value
+            $intervalMappings = [
+                'P24H' => 60 * 60 * 24,// NOTE: +24H
+            ];
+
+            return date($format, time() - ($intervalMappings[$interval] ?? 0));
+        }
+
+        return $date->format($format);
+    }
+
+    /**
+     * Returns Timestamp of give DateTime
+     * NOTE: the result is based on self::getTimezone
+     *
+     * @param string $datetime Expected value in the Format 'YYYY-MM-DD 00:00:00'
+     *
+     * @return int {timestamp}
+     */
+    public static function getTimestamp(string $datetime): int
+    {
+        try {
+            return (new \DateTime($datetime, self::getTimezone()))->getTimestamp();
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 }
