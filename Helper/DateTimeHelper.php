@@ -67,29 +67,25 @@ class DateTimeHelper
      *
      * @param string $interval see https://www.php.net/manual/en/dateinterval.construct.php
      * @param string $dateBegin Start Date to add interval
-     * @param string $format output date format
-     * @param \DateTimeZone|null $timezone [optional] self::TIMEZONE_DEFAULT is used by default
+     * @param string $outputFormat output date format
      *
      * @return string
      */
-    public static function addDateInterval(string $interval, string $dateBegin = 'now', string $format = 'c', ?\DateTimeZone $timezone = null): string
+    public static function addDateInterval(string $interval, string $dateBegin = 'now', string $outputFormat = 'c'): string
     {
         try {
-            if ($timezone === null) {
-                $timezone = self::getTimezone();
-            }
-            $date = (new \DateTime($dateBegin))->setTimezone($timezone);
-            $date->add(new \DateInterval($interval));
+            $dt = new \DateTime($dateBegin, self::getTimezone());
+            $dt->add(new \DateInterval($interval));
         } catch (\Exception $e) {
             // FIXME: WORKAROUND to proceed with correct intervals and return valid value
             $intervalMappings = [
                 'P24H' => 60 * 60 * 24,// NOTE: +24H
             ];
 
-            return date($format, time() + ($intervalMappings[$interval] ?? 0));
+            return date($outputFormat, time() + ($intervalMappings[$interval] ?? 0));
         }
 
-        return $date->format($format);
+        return $dt->format($outputFormat);
     }
 
     /**
@@ -97,29 +93,25 @@ class DateTimeHelper
      *
      * @param string $interval see https://www.php.net/manual/en/dateinterval.construct.php (Subtrahend)
      * @param string $dateBegin Start Date to subtract interval (Minuend)
-     * @param string $format output date format
-     * @param \DateTimeZone|null $timezone [optional] self::TIMEZONE_DEFAULT is used by default
+     * @param string $outputFormat output date format
      *
      * @return string
      */
-    public static function subtractDateInterval(string $interval, string $dateBegin = 'now', string $format = 'c', ?\DateTimeZone $timezone = null): string
+    public static function subtractDateInterval(string $interval, string $dateBegin = 'now', string $outputFormat = 'c'): string
     {
         try {
-            if ($timezone === null) {
-                $timezone = self::getTimezone();
-            }
-            $date = (new \DateTime($dateBegin))->setTimezone($timezone);
-            $date->sub(new \DateInterval($interval));
+            $dt = new \DateTime($dateBegin, self::getTimezone());
+            $dt->sub(new \DateInterval($interval));
         } catch (\Exception $e) {
             // FIXME: WORKAROUND to proceed with correct intervals and return valid value
             $intervalMappings = [
                 'P24H' => 60 * 60 * 24,// NOTE: +24H
             ];
 
-            return date($format, time() - ($intervalMappings[$interval] ?? 0));
+            return date($outputFormat, time() - ($intervalMappings[$interval] ?? 0));
         }
 
-        return $date->format($format);
+        return $dt->format($outputFormat);
     }
 
     /**
@@ -127,17 +119,13 @@ class DateTimeHelper
      * NOTE: the result is based on self::getTimezone
      *
      * @param string $datetime Expected value in the Format 'YYYY-MM-DD 00:00:00'
-     * @param \DateTimeZone|null $timezone [optional] self::TIMEZONE_DEFAULT is used by default
      *
      * @return int {timestamp}
      */
-    public static function getTimestamp(string $datetime, ?\DateTimeZone $timezone = null): int
+    public static function getTimestamp(string $datetime): int
     {
         try {
-            if ($timezone === null) {
-                $timezone = self::getTimezone();
-            }
-            return (new \DateTime($datetime))->setTimezone($timezone)->getTimestamp();
+            return (new \DateTime($datetime, self::getTimezone()))->getTimestamp();
         } catch (\Exception $e) {
             return 0;
         }
