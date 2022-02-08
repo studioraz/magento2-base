@@ -30,25 +30,36 @@ class DateTimeHelper
 
     /**
      * Returns formatted DateTime value
+     * NOTE: in case $outputTimezone is passed -> DateTime is converted into output timezone
      *
      * @param string $datetime Expected value in the Format 'YYYY-MM-DD 00:00:00'
      * @param string $outputFormat [optional] the Date will look like '2020-01-12T23:59:21+00:00' ('c' = ISO 8601)
-     * @param \DateTimeZone|null $timezone [optional] self::TIMEZONE_DEFAULT is used by default
+     * @param \DateTimeZone|null $inputTimezone [optional] self::TIMEZONE_DEFAULT is used by default
+     * @param \DateTimeZone|null $outputTimezone [optional] it is use only in case is it passed
      *
      * @return string
      */
-    public static function getFormattedValue(string $datetime, string $outputFormat = 'c', ?\DateTimeZone $timezone = null): string
-    {
+    public static function getFormattedValue(
+        string $datetime,
+        string $outputFormat = 'c',
+        ?\DateTimeZone $inputTimezone = null,
+        ?\DateTimeZone $outputTimezone = null
+    ): string {
         try {
-            if ($timezone === null) {
-                $timezone = self::getTimezone();
+            if ($inputTimezone === null) {
+                $inputTimezone = self::getTimezone();
             }
-            $date = (new \DateTime($datetime))->setTimezone($timezone);
+
+            $dt = new \DateTime($datetime, $inputTimezone);
+
+            if ($outputTimezone !== null) {
+                $dt->setTimezone($outputTimezone);
+            }
         } catch (\Exception $e) {
             return $datetime;
         }
 
-        return $date->format($outputFormat);
+        return $dt->format($outputFormat);
     }
 
     /**
