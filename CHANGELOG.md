@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.1] - 2022-02-08
+### Fixed
+- DateTimeHelper issue, when any operation did not count Timezone, which is passed to DateTime object;
+### Added
+- extra optional param $timezone to each method of DateTimeHelper;
+
 ## [1.4.0] - 2022-02-01
 ### Added:
 - getTimestamp method DateTimeHelper
@@ -32,7 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project init
 
 
-[Unreleased]: https://github.com/studioraz/magento2-base/compare/1.4.0...HEAD
+[Unreleased]: https://github.com/studioraz/magento2-base/compare/1.4.1...HEAD
+[1.4.1]: https://github.com/studioraz/magento2-base/releases/tag/1.4.1
 [1.4.0]: https://github.com/studioraz/magento2-base/releases/tag/1.4.0
 [1.3.0]: https://github.com/studioraz/magento2-base/releases/tag/1.3.0
 [1.2.0]: https://github.com/studioraz/magento2-base/releases/tag/1.2.0
