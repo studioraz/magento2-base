@@ -9,7 +9,7 @@
     <system>
         <!-- NOTE: sortOrder="999000" - to position Tab-Item before Advanced -->
         <tab id="studioraz" translate="label" sortOrder="999000" class="studioraz-tab srbase-tab-container">
-            <label>Studio Raz</label>
+            <label>StudioRaz</label>
         </tab>
 
         <section id="srbase" translate="label" type="text" sortOrder="-1000" showInDefault="1" showInWebsite="1" showInStore="1">
