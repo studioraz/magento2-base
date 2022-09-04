@@ -3,23 +3,19 @@
 //  * See LICENSE for license details.
 //  */
 
-#menu-redchamps-cleanmenu-extensions {
-    .submenu {
-        .level-0 {
-            &[id="menu-sr-base-srbase"] {
-                > a {
-                    &:before {
-                        content: '';
-                        background-image: url('SR_Base::images/sr-logo-gray.svg');
-                        background-size: auto 22px;
-                        background-repeat: no-repeat;
-                        background-position: 0 center;
-                    }
-                }
-            }
+#menu-sr-base-srbase {
+    > a {
+        &:before {
+            content: '';
+            background-image: url('SR_Base::images/sr-logo-gray.svg');
+            background-size: auto 22px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
         }
     }
 }
+
 
 .studioraz-tab {
     .admin__page-nav-title {
