@@ -9,4 +9,7 @@
     <type name="Magento\Framework\View\Element\AbstractBlock">
         <plugin name="SR_Base::js_layout_processor" type="SR\Base\Plugin\Framework\View\Element\AbstractBlockAfterGetJsLayoutPlugin"/>
     </type>
+    <type name="Magento\Catalog\Helper\Product\View">
+        <plugin name="SR_Base::catalog_product_view_attribute_set_id" type="SR\Base\Plugin\Catalog\Helper\Product\View"/>
+    </type>
 </config>
