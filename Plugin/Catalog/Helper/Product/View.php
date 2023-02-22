@@ -1,4 +1,9 @@
 <?php
+/*
+ * Copyright © 2023 Studio Raz. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
 namespace SR\Base\Plugin\Catalog\Helper\Product;
 
 use Magento\Catalog\Model\Product;
