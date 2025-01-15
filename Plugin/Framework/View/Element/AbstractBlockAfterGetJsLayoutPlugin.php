@@ -35,6 +35,9 @@ class AbstractBlockAfterGetJsLayoutPlugin
      */
     public function afterGetJsLayout(AbstractBlock $subject, $jsLayout): string
     {
+        if (!$jsLayout) {
+            return $jsLayout;
+        }
         Profiler::start(__METHOD__);
 
         $_jsLayout = json_decode($jsLayout, true);
