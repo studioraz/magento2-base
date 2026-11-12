@@ -2,7 +2,43 @@
  
 A base module for ALL Studio Raz modules. 
 
-The module list installed SR modules on the current site. see screenshot below. 
+The module lists the installed Studio Raz composer packages (`studioraz/*`, as recorded by Composer) on the current site
+(Stores › Configuration › StudioRaz › Extensions), see screenshot below.
+For every package it shows its description, the installed version, the latest released version and its release date,
+whether an update is available and a link to its changelog.
+
+### Update Check
+Latest versions and changelog links are read from the StudioRaz extensions feed:
+`https://studioraz.github.io/ci-extensions-feed/feed.json` (cached for 1 hour, flushed with the config cache).
+
+The check can be disabled under **Extensions › Update Check** (`srbase/update_check/enabled`). The feed URL is fixed
+(`SR\Base\Model\Extension\Feed::FEED_URL`). Feed format:
+```json
+{
+  "schema": 1,
+  "packages": {
+    "studioraz/magento2-base": {
+      "title": "Base",
+      "latest_version": "1.10.0",
+      "released_at": "2026-11-12T00:00:00+00:00",
+      "changelog_url": "https://github.com/studioraz/magento2-base/blob/1.10.0/CHANGELOG.md"
+    }
+  }
+}
+```
+The package name shown in the list is the feed `title`. For packages missing from the feed it falls back to
+`extra.title` of the package composer.json, e.g.:
+```json
+{
+    "name": "studioraz/magento2-pointofsale",
+    "extra": {
+        "title": "Point of Sale"
+    }
+}
+```
+
+Packages missing from the feed (or when the feed is unreachable) are shown with status "Unknown" and no changelog link.
+
 
 In addition, it adds 2 extra features that should be utilized by dependent modules: 
 

@@ -18,8 +18,17 @@
             <resource>SR_Base::extensions</resource>
 
             <group id="extensions" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Installed Modules</label>
+                <label>Installed Packages</label>
                 <frontend_model>SR\Base\Block\Adminhtml\System\Config\Fieldset\Extensions</frontend_model>
+            </group>
+
+            <group id="update_check" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Update Check</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Check for Updates</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Compare installed module versions with the latest released versions.</comment>
+                </field>
             </group>
         </section>
     </system>

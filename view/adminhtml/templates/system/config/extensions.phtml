@@ -1,0 +1,112 @@
+<?php
+/**
+ * Copyright © 2026 Studio Raz. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+use Magento\Backend\Block\Template;
+use Magento\Framework\Escaper;
+use SR\Base\Model\Extension\Extension;
+use SR\Base\Model\Extension\ExtensionList;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+/** @var ExtensionList $extensionList */
+$extensionList = $block->getData('extension_list');
+$extensions = $extensionList->getAll();
+$updateCheck = $extensionList->isUpdateCheckEnabled();
+$statusCounts = $extensionList->getStatusCounts();
+
+$statusLabels = [
+    Extension::STATUS_LATEST => __('Up to date'),
+    Extension::STATUS_OUTDATED => __('Update available'),
+    Extension::STATUS_UNKNOWN => __('Unknown'),
+];
+?>
+<div class="srbase-extensions">
+    <?php if (!$extensions): ?>
+        <p class="srbase-extensions__empty"><?= $escaper->escapeHtml(__('No Studio Raz packages are installed.')) ?></p>
+    <?php else: ?>
+        <?php if ($updateCheck): ?>
+            <ul class="srbase-extensions__summary">
+                <?php foreach ($statusCounts as $status => $count): ?>
+                    <li class="srbase-extensions__status _<?= $escaper->escapeHtmlAttr($status) ?>">
+                        <?= $escaper->escapeHtml($statusLabels[$status]) ?>: <?= (int)$count ?>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+            <p class="srbase-extensions__feed">
+                <?= $escaper->escapeHtml(__('Latest versions source:')) ?>
+                <a href="<?= $escaper->escapeUrl($extensionList->getFeedUrl()) ?>"
+                   target="_blank" rel="noopener noreferrer"><?= $escaper->escapeHtml($extensionList->getFeedUrl()) ?></a>
+            </p>
+        <?php endif ?>
+        <table class="data-grid srbase-extensions__table">
+            <thead>
+            <tr>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Package')) ?></th>
+                <th class="data-grid-th"><?= $escaper->escapeHtml(__('Installed')) ?></th>
+                <?php if ($updateCheck): ?>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Latest')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Release Date')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Update Status')) ?></th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Changelog')) ?></th>
+                <?php endif ?>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($extensions as $extension): ?>
+                <?php $status = $extension->getStatus(); ?>
+                <tr class="srbase-extensions__row _<?= $escaper->escapeHtmlAttr($status) ?>">
+                    <td>
+                        <strong><?= $escaper->escapeHtml($extension->getTitle() ?: $extension->getPackageName()) ?></strong>
+                        <?php if ($extension->getTitle()): ?>
+                            <div class="srbase-extensions__package">
+                                <?= $escaper->escapeHtml($extension->getPackageName()) ?>
+                            </div>
+                        <?php endif ?>
+                        <?php if ($extension->getDescription()): ?>
+                            <div class="srbase-extensions__description">
+                                <?= $escaper->escapeHtml($extension->getDescription()) ?>
+                            </div>
+                        <?php endif ?>
+                    </td>
+                    <td><?= $escaper->escapeHtml($extension->getVersion() ?: '—') ?></td>
+                    <?php if ($updateCheck): ?>
+                        <td><?= $escaper->escapeHtml($extension->getLatestVersion() ?: '—') ?></td>
+                        <td class="srbase-extensions__date">
+                            <?php
+                            $releasedAt = '';
+                            if ($extension->getReleasedAt()) {
+                                try {
+                                    $releasedAt = $block->formatDate(
+                                        new \DateTime($extension->getReleasedAt()),
+                                        \IntlDateFormatter::MEDIUM
+                                    );
+                                } catch (\Exception $e) {
+                                    $releasedAt = '';
+                                }
+                            }
+                            ?>
+                            <?= $escaper->escapeHtml($releasedAt ?: '—') ?>
+                        </td>
+                        <td>
+                            <span class="srbase-extensions__status _<?= $escaper->escapeHtmlAttr($status) ?>">
+                                <?= $escaper->escapeHtml($statusLabels[$status]) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <?php if ($extension->getChangelogUrl()): ?>
+                                <a href="<?= $escaper->escapeUrl($extension->getChangelogUrl()) ?>"
+                                   target="_blank" rel="noopener noreferrer">
+                                    <?= $escaper->escapeHtml(__('View changelog')) ?>
+                                </a>
+                            <?php endif ?>
+                        </td>
+                    <?php endif ?>
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+    <?php endif ?>
+</div>
