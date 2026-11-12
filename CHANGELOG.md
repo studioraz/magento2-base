@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0](https://github.com/studioraz/magento2-base/compare/1.9.0...1.10.0) (2026-11-12)
+
+
+### Features
+
+* show installed vs latest versions on the extensions page ([#5](https://github.com/studioraz/magento2-base/issues/5)) ([66ca216](https://github.com/studioraz/magento2-base/commit/66ca216a69510cdd7d144fdb9aae51600f6bf825))
+
 ## [Unreleased]
 
 ## [1.4.3] - 2022-08-28
